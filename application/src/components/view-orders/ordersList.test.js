@@ -55,29 +55,4 @@ describe('Orders List', () => {
         expect(screen.getByText(/^.*888.*$/gm)).toBeInTheDocument();
 
     });
-
-    test('formats time correctly', () => {
-        const orders = [
-            {
-                order_item: "Food",
-                quantity: "777",
-                _id: 1,
-                createdAt: "2022-04-15T04:17:00.390Z"
-            },
-            {
-                order_item: "Drink",
-                quantity: "888",
-                _id: 2,
-                createdAt: "2022-04-15T07:15:53.276Z"
-            }
-        ];
-        render(
-            <OrdersList
-                orders={orders}
-            />
-        )
-        expect(screen.getByText(/^.*21:17:00.*$/gm)).toBeInTheDocument();
-        expect(screen.getByText(/^.*00:15:53.*$/gm)).toBeInTheDocument();
-
-    });
 })
