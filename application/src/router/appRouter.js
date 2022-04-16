@@ -1,14 +1,31 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import { Main, Login, OrderForm, ViewOrders} from '../components';
 
 const AppRouter = (props) => {
+  const auth = useSelector((state) => state.auth);
+
   return (
     <Router>
-      <Route path="/" exact component={Main} />
-      <Route path="/login" exact component={Login} />
-      <Route path="/order" exact component={OrderForm} />
-      <Route path="/view-orders" exact component={ViewOrders} />
+      <Routes>
+        <Route path="/" exact element={<Main />} />
+        <Route path="/login" element={
+          auth.email
+            ? <ViewOrders  {...props}/>
+            : <Login {...props}/>
+        }/>
+        <Route path="/order" element={
+          auth.email
+            ? <OrderForm  {...props}/>
+            : <Navigate replace to='/login' />
+        }/>
+        <Route path="/view-orders" element={
+          auth.email
+            ? <ViewOrders  {...props}/>
+            : <Navigate replace to='/login' />
+        }/>
+      </Routes>
     </Router>
   );
 }
